@@ -18,6 +18,7 @@ const ListRecipes = () => {
       .then((data) => {
         console.log("Fetched recipes:", data); // Check if data is received correctly
         setRecipes(data); // Assuming you're storing the recipes in state
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching recipes:", error);
