@@ -24,11 +24,56 @@ const connectToDB = async () => {
   }
 };
 
-// CRUD Methods for Recipes
-
 app.get("/", (req, res) => {
   res.send("Welcome to the server. Use /listRecipes or other endpoints.");
 });
+
+// CRUD Methods for Users
+
+// Get a user by ID
+app.get("/api/users/:id", async (req, res) => {
+  try {
+    await connectToDB();
+    const id = req.params.id;
+
+    // Fetch the user by ID
+    const user = await db.collection("users").findOne({ _id: new MongoClient.ObjectId(id) });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    res.status(500).json({ error: "Failed to fetch user" });
+  }
+});
+
+// Add a new user (Sign up)
+app.post("/api/users", async (req, res) => {
+  try {
+    await connectToDB();
+    const newUser = req.body;
+
+    if (!newUser || !newUser.username || !newUser.password) {
+      return res.status(400).json({ error: "Username and password are required" });
+    }
+
+    // Hash the password before storing it
+    const hashedPassword = await bcrypt.hash(newUser.password, 10);
+    newUser.password = hashedPassword;
+
+    const result = await db.collection("users").insertOne(newUser); // Use 'users' collection
+    console.log("User added:", result); // Log the result
+    res.status(201).json(result);
+  } catch (error) {
+    console.error("Error adding user:", error);
+    res.status(500).json({ error: "Failed to add user" });
+  }
+});
+
+// CRUD Methods for Recipes
 
 // List recipes
 app.get("/listRecipes", async (req, res) => {
@@ -40,6 +85,26 @@ app.get("/listRecipes", async (req, res) => {
   } catch (error) {
     console.error("Error in GET /listRecipes:", error);
     res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
+// Get a recipe by ID
+app.get("/api/recipes/:id", async (req, res) => {
+  try {
+    await connectToDB();
+    const id = Number(req.params.id);
+    
+    // Fetch the recipe by ID
+    const recipe = await db.collection("recipe").findOne({ id: id });
+
+    if (!recipe) {
+      return res.status(404).json({ error: "Recipe not found" });
+    }
+
+    res.status(200).json(recipe);
+  } catch (error) {
+    console.error("Error fetching recipe by ID:", error);
+    res.status(500).json({ error: "Failed to fetch recipe" });
   }
 });
 
