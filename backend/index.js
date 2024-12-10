@@ -7,144 +7,86 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const port = "8081";
-const host = "localhost";
-
 // MongoDB configuration
 const url = "mongodb://127.0.0.1:27017";
 const dbName = "secoms3190";
 const client = new MongoClient(url);
 let db;
 
-async function connectToDB() {
+const connectToDB = async () => {
   if (!db) {
     await client.connect();
     db = client.db(dbName);
     console.log("Connected to MongoDB");
   }
-}
+};
 
-// Endpoint to list robots
-app.get("/listRobots", async (req, res) => {
+// CRUD Methods for Recipes
+
+// Get all recipes
+app.get("/api/recipes", async (req, res) => {
   try {
     await connectToDB();
-    console.log("Node connected successfully to GET MongoDB");
-
-    const query = {};
-    const results = await db
-      .collection("robot")
-      .find(query)
-      .limit(100)
-      .toArray();
-    console.log(results);
-
-    res.status(200).send(results);
+    const recipes = await db.collection("recipes").find({}).toArray();
+    res.status(200).json(recipes);
   } catch (error) {
-    console.error("Error in GET /listRobots:", error);
-    res.status(500).send({ error: "Internal Server Error" });
+    console.error("Error fetching recipes:", error);
+    res.status(500).json({ error: "Failed to fetch recipes" });
   }
 });
 
-// Endpoint to add a new robot
-app.post("/robot", async (req, res) => {
+// Add a new recipe
+app.post("/api/recipes", async (req, res) => {
   try {
     await connectToDB();
+    const newRecipe = req.body;
 
-    // Validate request body
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).send({ error: "Bad request: No data provided." });
+    if (!newRecipe || Object.keys(newRecipe).length === 0) {
+      return res.status(400).json({ error: "No data provided" });
     }
 
-    const newDocument = {
-      id: req.body.id,
-      name: req.body.name,
-      price: req.body.price,
-      description: req.body.description,
-      imageUrl: req.body.imageUrl,
-    };
-
-    console.log("New robot data:", newDocument);
-
-    // Check for duplicate ID
-    const existingDoc = await db
-      .collection("robot")
-      .findOne({ id: newDocument.id });
-    if (existingDoc) {
-      return res
-        .status(409)
-        .send({ error: "Conflict: A robot with this ID already exists." });
-    }
-
-    // Insert new document
-    const result = await db.collection("robot").insertOne(newDocument);
-    console.log("Insert result:", result);
-
-    res.status(201).send(result);
+    const result = await db.collection("recipes").insertOne(newRecipe);
+    res.status(201).json(result);
   } catch (error) {
-    console.error("Error in POST /robot:", error);
-    res.status(500).send({ error: "Internal Server Error" });
+    console.error("Error adding recipe:", error);
+    res.status(500).json({ error: "Failed to add recipe" });
   }
 });
 
-app.delete("/robot/:id", async (req, res) => {
-  // read data from robot to delete to send it to frontend
-  const robotDeleted = await db.collection("robot").findOne(query);
-  
+// Update a recipe by ID
+app.put("/api/recipes/:id", async (req, res) => {
   try {
-    // Read parameter id
+    await connectToDB();
     const id = Number(req.params.id);
-    console.log("Robot to delete :", id);
-    // Connect Mongodb
-    await client.connect();
-    // Delete by its id
-    const query = { id: id };
-    // Delete
-    const results = await db.collection("robot").deleteOne(query);
-    // Response to Client
-    res.status(200);
-    res.send(results);
+    const updatedRecipe = req.body;
 
-    // Response to Client
-    res.status(200);
-    res.send(robotDeleted);
+    const result = await db
+      .collection("recipes")
+      .updateOne({ id: id }, { $set: updatedRecipe });
+
+    res.status(200).json(result);
   } catch (error) {
-    console.error("Error deleting robot:", error);
-    res.status(500).send({ message: "Internal Server Error" });
+    console.error("Error updating recipe:", error);
+    res.status(500).json({ error: "Failed to update recipe" });
   }
 });
 
-app.put("/robot/:id", async (req, res) => {
-  // read data from robot to update to send to frontend
-  const robotUpdated = await db.collection("robot").findOne(query);
+// Delete a recipe by ID
+app.delete("/api/recipes/:id", async (req, res) => {
+  try {
+    await connectToDB();
+    const id = Number(req.params.id);
 
-  const id = Number(req.params.id); // Read parameter id
-  console.log("Robot to Update :", id);
-  await client.connect(); // Connect Mongodb
-  const query = { id: id }; // Update by its id
-  // Data for updating the document, typically comes from the request body
-  console.log(req.body);
-  const updateData = {
-    $set: {
-      name: req.body.name,
-      price: req.body.price,
-      description: req.body.description,
-      imageUrl: req.body.imageUrl,
-    },
-  };
-  // Add options if needed, for example { upsert: true } to create a document if it doesn't exist
-  const options = {};
-  const results = await db
-    .collection("robot")
-    .updateOne(query, updateData, options);
-  res.status(200); // Response to Client
-  res.send(results);
-
-  // Response to Client
-  res.status(200);
-  res.send(robotUpdated);
+    const result = await db.collection("recipes").deleteOne({ id: id });
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error deleting recipe:", error);
+    res.status(500).json({ error: "Failed to delete recipe" });
+  }
 });
 
 // Start the server
+const port = 8081;
 app.listen(port, () => {
-  console.log("App listening at http://%s:%s", host, port);
+  console.log(`Server running at http://localhost:${port}`);
 });
