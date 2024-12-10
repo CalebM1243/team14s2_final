@@ -8,20 +8,22 @@ const ListRecipes = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const response = await fetch('/api/recipes'); // Replace with your actual API endpoint
-        const data = await response.json();
-        setRecipes(data);
-      } catch (error) {
-        console.error('Error fetching recipes:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecipes();
+    fetch("http://localhost:8081/listRecipes")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Fetched recipes:", data); // Check if data is received correctly
+        setRecipes(data); // Assuming you're storing the recipes in state
+      })
+      .catch((error) => {
+        console.error("Error fetching recipes:", error);
+      });
   }, []);
+  
 
   if (loading) {
     return (
