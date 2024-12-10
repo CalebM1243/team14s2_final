@@ -1,29 +1,14 @@
 // src/components/RecipePage.js
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 
 const RecipePage = () => {
-  // State to store the recipe data
-  const [recipe, setRecipe] = useState(null);
-  
-  // Get the recipe ID from the URL params
-  const { id } = useParams();
-
-  useEffect(() => {
-    // Fetch the recipe data based on the ID
-    const fetchRecipe = async () => {
-      // Replace with your actual API call or mock data
-      const response = await fetch(`/api/recipes/${id}`);
-      const data = await response.json();
-      setRecipe(data);
-    };
-
-    fetchRecipe();
-  }, [id]);
+  const location = useLocation();
+  const { recipe } = location.state || {}; // Retrieve passed recipe data
 
   if (!recipe) {
-    return <div>Loading...</div>;
+    return <div>Recipe not found</div>;  // In case no recipe is passed or error occurs
   }
 
   return (
@@ -43,8 +28,8 @@ const RecipePage = () => {
 
           <Card.Text><strong>Instructions:</strong></Card.Text>
           <ol>
-            {recipe.instructions.map((step, index) => (
-              <li key={index}>{step}</li>
+            {recipe.instructions.map((instruction, index) => (
+              <li key={index}>{instruction}</li>
             ))}
           </ol>
 
