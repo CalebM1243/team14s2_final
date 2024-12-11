@@ -14,6 +14,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import RecipePage from "./components/RecipePage";
 import CreateRecipe from "./components/CreateRecipe";
+import ProfilePage from "./components/ProfilePage";
 function App() {
   const [activePage, setActivePage] = useState("home");
   const [recipes, setRecipes] = useState([]);
@@ -36,6 +37,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/createRecipe" element={<CreateRecipe  recipes={recipes} setRecipes={setRecipes}/>}/>
+          <Route path="/profile" element={<ProfilePage recipes={recipes}/>}/>
         </Routes>
       </main>
       <Footer />

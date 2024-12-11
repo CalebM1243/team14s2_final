@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useUser } from '../UserContext';
 import '../css/RecipePage.css';
 
 const goBack = () => {
@@ -12,12 +13,15 @@ const goBack = () => {
 };
 
 const RecipePage = () => {
+  const { username } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
   const recipe = location.state.recipe;
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [updatedRecipe, setUpdatedRecipe] = useState({ ...recipe });
+  const [rating, setRating] = useState(0);
+
 
   if (!recipe) {
     return <div>Recipe not found</div>;
@@ -73,14 +77,74 @@ const RecipePage = () => {
     }));
   };
 
+  const handleRating = async () => {
+    if (username === recipe.creator) {
+      alert('You cannot rate your own recipe.');
+      return;
+    }
+
+    const hasRated = recipe.ratings.some((r) => r.username === username);
+    if (hasRated) {
+      alert('You have already rated this recipe.');
+      return;
+    }
+    if(rating > 10.0){
+      alert("Enter a number from 1-10");
+      return;
+    }
+
+    try {
+
+      const newRating = { username, rating };
+      const updatedRatings = [...recipe.ratings, newRating];
+      const response = await fetch(`http://localhost:8081/api/recipes/${recipe._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...recipe, ratings: updatedRatings }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit rating');
+      }
+
+      alert('Rating submitted successfully.');
+      recipe.ratings = updatedRatings;
+    } catch (error) {
+      console.error('Error submitting rating:', error);
+      alert('An error occurred while submitting your rating.');
+    }
+  };
+
+  const calculateAverageRating = () => {
+    if (recipe.ratings.length === 0) return 'No ratings yet';
+    const total = recipe.ratings.reduce((sum, r) => sum + r.rating, 0);
+    return (total / recipe.ratings.length).toFixed(1);
+  };
+
   return (
     <div className="container mt-5">
       {/* Title Section */}
-      <Row className="mb-5">
+      <Row className="mb-3">
         <Col>
           <h1 className="text-center text-primary">{recipe.title}</h1>
         </Col>
       </Row>
+
+      {/* Recipe Creator */}
+      <Row className="mb-4">
+        <Col>
+          <p className="text-center text-muted">Created by: {recipe.creator}</p>
+        </Col>
+      </Row>
+
+      <Row className="mb-4">
+        <Col>
+          <p className="text-center text-warning">Average Rating: {calculateAverageRating()}</p>
+        </Col>
+      </Row>
+
 
       {/* Image and Description Section */}
       <Row className="mb-4">
@@ -126,9 +190,9 @@ const RecipePage = () => {
           </div>
         </Col>
       </Row>
-
+              {        console.log(username)}
       {/* Buttons */}
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center" style={{marginBottom:20}}>
         <Button
           variant="secondary"
           size="lg"
@@ -138,22 +202,47 @@ const RecipePage = () => {
           Go Back
         </Button>
 
-        <Button
-          variant="danger"
-          size="lg"
-          className="me-3"
-          onClick={handleDelete}
-        >
-          Delete
-        </Button>
+        {username === recipe.creator && (
+          <>
+            <Button
+              variant="danger"
+              size="lg"
+              className="me-3"
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
 
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={() => setShowEditModal(true)}
-        >
-          Edit
-        </Button>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => setShowEditModal(true)}
+            >
+              Edit
+            </Button>
+          </>
+        )}
+        {username !== recipe.creator && !recipe.ratings.some((r) => r.username === username) && (
+          <>
+            <Form.Control
+              type="number"
+              min="1"
+              max="10"
+              step="0.1"
+              className="me-3"
+              style={{ width: '100px' }}
+              value={rating}
+              onChange={(e) => setRating(parseFloat(e.target.value))}
+            />
+            <Button
+              variant="success"
+              size="lg"
+              onClick={handleRating}
+            >
+              Rate
+            </Button>
+          </>
+        )}
       </div>
 
       {/* Edit Modal */}

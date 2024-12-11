@@ -20,7 +20,6 @@
       "Season with salt and pepper, then serve."
     ],
     "ratings": [
-      { "userID": "2", "rating": 5 }
     ]
   },
   {
@@ -43,7 +42,6 @@
       "Garnish with Parmesan cheese and serve."
     ],
     "ratings": [
-      { "userID": "2", "rating": 5 }
     ]
   },
   {
@@ -66,7 +64,6 @@
       "Serve with sour cream and salsa on the side."
     ],
     "ratings": [
-      { "userID": "2", "rating": 5 }
     ]
   },
   {
@@ -89,7 +86,6 @@
       "Serve hot with rice or noodles."
     ],
     "ratings": [
-      { "userID": "2", "rating": 5 }
     ]
   },
   {
@@ -112,7 +108,6 @@
       "Drizzle with olive oil and bake for 12-15 minutes."
     ],
     "ratings": [
-      { "userID": "2", "rating": 5 }
     ]
   },
   {
@@ -135,7 +130,6 @@
       "Cook until bubbles form on the surface, then flip and cook the other side."
     ],
     "ratings": [
-      { "userID": "2", "rating": 5 }
     ]
   },
   {
@@ -157,7 +151,6 @@
       "Garnish with parsley and serve with lemon wedges."
     ],
     "ratings": [
-      { "userID": "2", "rating": 5 }
     ]
   },
   {
@@ -180,7 +173,6 @@
       "Drop spoonfuls of dough onto a baking sheet and bake for 10-12 minutes."
     ],
     "ratings": [
-      { "userID": "2", "rating": 5 }
     ]
   }
 ]
