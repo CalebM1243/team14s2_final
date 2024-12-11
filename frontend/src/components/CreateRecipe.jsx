@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../UserContext';
 
 const CreateRecipe = ({ recipes, setRecipes }) => {
   const [title, setTitle] = useState('');
@@ -9,6 +10,7 @@ const CreateRecipe = ({ recipes, setRecipes }) => {
   const [directions, setDirections] = useState('');
   const [image, setImage] = useState('');
   const navigate = useNavigate();
+  const { username } = useUser();
 
 
 
@@ -18,11 +20,13 @@ const CreateRecipe = ({ recipes, setRecipes }) => {
         try {
             const newRecipe = {
                 id: newId,
+                creator: username,
                 title,
                 description,
                 image,
                 ingredients: ingredients.split(',').map((item) => item.trim()),
                 directions: directions.split(',').map((item) => item.trim()),
+                ratings: [],
               };
           const response = await fetch('http://localhost:8081/api/recipes', {
             method: 'POST',
