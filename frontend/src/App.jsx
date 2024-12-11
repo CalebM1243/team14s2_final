@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom"; // Import useLocation to check the current route
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import RecipeList from "./components/RecipeList";
@@ -10,14 +16,28 @@ function App() {
   
   return (
     <div>
-      <Header setActivePage={setActivePage} />
+      {shouldDisplayHeader && <Header setActivePage={setActivePage} />}{" "}
+      {/* Conditionally render Header */}
       <main>
-        {activePage === "home" && (<RecipeList recipes={recipes} setRecipes = {setRecipes} setActivePage={setActivePage}/>)}
-        {activePage === "recipe" && (<RecipePage recipes={recipes} setActivePage={setActivePage}/>)}
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<RecipeList recipes={arrayRecipes} />} />
+          <Route path="/authors" element={<Authors />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
 
-export default App;
+export default function AppWrapper() {
+  return (
+    <Router>
+      {" "}
+      {/* Ensure the Router wraps the entire App */}
+      <App />
+    </Router>
+  );
+}
