@@ -132,28 +132,29 @@ app.get("/api/recipes/:id", async (req, res) => {
 app.post("/api/recipes", async (req, res) => {
   try {
     await connectToDB();
-    const userID = req.params.userID;
-    const { recipeID } = req.body;
+    
+    const newRecipe = req.body;
+    
+    // Generate a custom id for the new recipe, if needed
+    
+    // Insert the new recipe into the collection
+    const result = await db.collection("recipe").insertOne({
+      creator: newRecipe.creator,
+      title: newRecipe.title,
+      description: newRecipe.description,
+      image: newRecipe.image,
+      ingredients: newRecipe.ingredients,
+      directions: newRecipe.directions,
+      ratings: newRecipe.ratings,
+    });
 
-    if (!recipeID) {
-      return res.status(400).json({ error: "Recipe ID is required" });
-    }
-
-    const user = await db.collection("user").findOne({ userID });
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    const updatedUser = await db
-      .collection("user")
-      .updateOne({ userID }, { $addToSet: { recipes: recipeID } }); // Avoid duplicate entries
-
-    res.status(200).json({ message: "Recipe added to user collection", updatedUser });
+    res.status(201).json({ message: "Recipe created successfully" });
   } catch (error) {
-    console.error("Error adding recipe to user:", error);
-    res.status(500).json({ error: "Failed to add recipe to user" });
+    console.error("Error creating recipe:", error);
+    res.status(500).json({ error: "Failed to create recipe" });
   }
 });
+
 
 // Update a recipe by ID
 app.put("/api/recipes/:id", async (req, res) => {
@@ -162,9 +163,15 @@ app.put("/api/recipes/:id", async (req, res) => {
     const id = req.params.id;
     const updatedRecipe = req.body;
 
+    // Prevent modifying the '_id' field in the update
+    if (updatedRecipe._id) {
+      delete updatedRecipe._id; // Remove the _id field if it exists in the request body
+    }
+
+    // Perform the update operation using the custom 'id' (not _id)
     const result = await db
       .collection("recipe")
-      .updateOne({ _id: new MongoClient.ObjectId(id) }, { $set: updatedRecipe });
+      .updateOne({ _id: new ObjectId(id) }, { $set: updatedRecipe });
 
     res.status(200).json(result);
   } catch (error) {
@@ -173,25 +180,27 @@ app.put("/api/recipes/:id", async (req, res) => {
   }
 });
 
+
 // Delete a recipe by ID
 app.delete("/api/recipes/:id", async (req, res) => {
   try {
     await connectToDB();
     const id = req.params.id;
 
-    // Use your custom `id` field instead of `_id`
-    const result = await db.collection("recipe").deleteOne({ id: parseInt(id, 10) });
+    // Perform the delete operation using the _id field
+    const result = await db.collection("recipe").deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
-      return res.status(404).json({ error: "Recipe not found" });
+      res.status(404).json({ message: "Recipe not found" });
+    } else {
+      res.status(200).json({ message: "Recipe deleted successfully" });
     }
-
-    res.status(200).json({ message: "Recipe deleted successfully" });
   } catch (error) {
     console.error("Error deleting recipe:", error);
     res.status(500).json({ error: "Failed to delete recipe" });
   }
 });
+
 
 
 // Start the server
