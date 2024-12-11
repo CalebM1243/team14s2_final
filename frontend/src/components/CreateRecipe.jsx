@@ -24,7 +24,7 @@ const CreateRecipe = ({ recipes, setRecipes }) => {
                 image,
                 ingredients: ingredients.split(',').map((item) => item.trim()),
                 directions: directions.split(',').map((item) => item.trim()),
-                ratings: [],
+                ratings: []
               };
           const response = await fetch('http://localhost:8081/api/recipes', {
             method: 'POST',
