@@ -22,7 +22,6 @@ const RecipePage = () => {
   const [updatedRecipe, setUpdatedRecipe] = useState({ ...recipe });
   const [rating, setRating] = useState(0);
 
-
   if (!recipe) {
     return <div>Recipe not found</div>;
   }
@@ -94,7 +93,6 @@ const RecipePage = () => {
     }
 
     try {
-
       const newRating = { username, rating };
       const updatedRatings = [...recipe.ratings, newRating];
       const response = await fetch(`http://localhost:8081/api/recipes/${recipe._id}`, {
@@ -133,18 +131,17 @@ const RecipePage = () => {
       </Row>
 
       {/* Recipe Creator */}
-      <Row className="mb-4">
+      <Row className="mb-2">
         <Col>
           <p className="text-center text-muted">Created by: {recipe.creator}</p>
         </Col>
       </Row>
 
-      <Row className="mb-4">
+      <Row className="mb-2">
         <Col>
           <p className="text-center text-warning">Average Rating: {calculateAverageRating()}</p>
         </Col>
       </Row>
-
 
       {/* Image and Description Section */}
       <Row className="mb-4">
@@ -164,7 +161,7 @@ const RecipePage = () => {
       </Row>
 
       {/* Ingredients Section */}
-      <Row className="mb-4">
+      <Row className="mb-3">
         <Col>
           <div className="section-box">
             <h4>Ingredients:</h4>
@@ -175,10 +172,8 @@ const RecipePage = () => {
             </ul>
           </div>
         </Col>
-      </Row>
 
       {/* Instructions Section */}
-      <Row className="mb-5">
         <Col>
           <div className="section-box">
             <h4>Instructions:</h4>
@@ -190,9 +185,9 @@ const RecipePage = () => {
           </div>
         </Col>
       </Row>
-              {        console.log(username)}
-      {/* Buttons */}
-      <div className="d-flex justify-content-center" style={{marginBottom:20}}>
+
+      {/* Buttons Section */}
+      <div className="d-flex justify-content-center mb-4">
         <Button
           variant="secondary"
           size="lg"

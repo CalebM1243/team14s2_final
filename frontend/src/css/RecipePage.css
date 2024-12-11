@@ -1,79 +1,118 @@
 /* RecipePage.css */
 
+/* Container for the whole page */
+.container {
+  margin-top: 30px;
+  max-width: 1200px;  /* To control the width of the content */
+}
+
 /* Add a subtle shadow and border radius to the recipe image */
 .recipe-image {
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     object-fit: cover;
     max-height: 400px;
-  }
-  
-  /* Style the description box */
-  .description-box {
+    width: 100%;  /* Ensure the image takes up full column width */
+}
+
+/* Style the description box */
+.description-box {
     background-color: #f8f9fa;
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Style each section box for ingredients and instructions */
-  .section-box {
+    margin-bottom: 20px; /* Added margin for better spacing */
+}
+
+/* Style each section box for ingredients and instructions */
+.section-box {
     background-color: #f8f9fa;
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Styling for the ingredients list */
-  .ingredient-item {
+    margin-bottom: 20px; /* Added margin for better spacing */
+}
+
+/* Styling for the ingredients list */
+.ingredient-item {
     padding-left: 15px;
     position: relative;
     font-size: 1.1rem;
-  }
-  
-  .ingredient-item::before {
+    margin-bottom: 8px; /* Added margin to space out list items */
+}
+
+.ingredient-item::before {
     position: absolute;
     left: 0;
     color: green;
     font-size: 1.3rem;
     top: 50%;
     transform: translateY(-50%);
-  }
-  
-  /* Styling for the instructions list */
-  .instruction-item {
+}
+
+/* Styling for the instructions list */
+.instruction-item {
     font-size: 1.1rem;
     padding-left: 15px;
     position: relative;
-  }
-  
-  .instruction-item::before {
+    margin-bottom: 8px; /* Added margin to space out list items */
+}
+
+.instruction-item::before {
     position: absolute;
     left: 0;
     color: #007bff;
     font-size: 1.5rem;
     top: 50%;
     transform: translateY(-50%);
-  }
-  
-  /* Button Styling */
-  button {
+}
+
+/* Flexbox for buttons layout */
+.d-flex {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Ensures there's space between the buttons */
+    margin-bottom: 20px; /* Adjusted bottom margin for consistency */
+}
+
+/* Button Styling */
+button {
     font-weight: 600;
     padding: 10px 20px;
     border-radius: 50px;
     transition: background-color 0.3s;
-  }
-  
-  button:hover {
+    white-space: nowrap; /* Prevents text wrapping inside buttons */
+}
+
+button:hover {
     background-color: #007bff;
     color: white;
-  }
-  
-  h1, h4 {
+}
+
+/* Title and Subheading Styling */
+h1, h4 {
     color: #333;
-  }
-  
-  h3 {
+    margin-bottom: 10px; /* Added margin for proper spacing */
+}
+
+h3 {
     color: #495057;
+    margin-bottom: 15px; /* Adjusted margin for better spacing */
+}
+
+/* Column spacing */
+.row {
+    margin-bottom: 20px; /* Add bottom margin to rows */
+}
+
+@media (max-width: 768px) {
+  /* For smaller screens, ensure better responsiveness */
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
   }
-  
+
+  .recipe-image {
+    max-height: 300px; /* Limit image size on smaller screens */
+  }
+}
