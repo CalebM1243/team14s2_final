@@ -12,7 +12,7 @@ const host = "localhost";
 
 // MongoDB configuration
 const url = "mongodb://127.0.0.1:27017";
-const dbName = "secoms319";
+const dbName = "secoms3190";
 const client = new MongoClient(url);
 let db;
 
