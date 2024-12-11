@@ -1,23 +1,48 @@
 import React from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 import '../css/RecipePage.css'; // For custom styles
-import { useLocation} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const goBack = () => {
   if (window.history.length > 1) {
     window.history.back();
   } else {
-    // Navigate to a default page or home
     window.location.href = '/';
   }
 };
 
 const RecipePage = () => {
   const location = useLocation();
-  const recipes = location.state.recipe;
+  const navigate = useNavigate();
+  const recipes = location.state?.recipe;
+
   if (!recipes) {
-    return <div>Recipe not found</div>;  // In case no recipe is passed or error occurs
+    return <div>Recipe not found</div>; // In case no recipe is passed or error occurs
   }
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this recipe? This action cannot be undone."
+    );
+
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`http://localhost:8081/api/recipes/${recipes.id}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to delete recipe');
+        }
+
+        alert('Recipe deleted successfully.');
+        navigate('/home'); // Redirect to the home page after deletion
+      } catch (error) {
+        console.error('Error deleting recipe:', error);
+        alert('An error occurred while deleting the recipe. Please try again.');
+      }
+    }
+  };
 
   return (
     <div className="container mt-5">
@@ -73,15 +98,23 @@ const RecipePage = () => {
         </Col>
       </Row>
 
-      {/* Go Back Button */}
-      <Button
-        variant="secondary"
-        size="lg"
-        style={{ marginBottom: '20px', marginTop: '10px', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
-        onClick={() => goBack()}
-      >
-        Go Back
-      </Button>
+      {/* Buttons */}
+      <div className="d-flex justify-content-between">
+        <Button
+          variant="secondary"
+          size="lg"
+          onClick={goBack}
+        >
+          Go Back
+        </Button>
+        <Button
+          variant="danger"
+          size="lg"
+          onClick={handleDelete}
+        >
+          Delete Recipe
+        </Button>
+      </div>
     </div>
   );
 };

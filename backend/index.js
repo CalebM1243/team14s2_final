@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 
 const app = express();
 app.use(cors());
@@ -12,7 +12,7 @@ const host = "localhost";
 
 // MongoDB configuration
 const url = "mongodb://127.0.0.1:27017";
-const dbName = "secoms3190";
+const dbName = "secoms319";
 const client = new MongoClient(url);
 let db;
 
@@ -182,13 +182,20 @@ app.delete("/api/recipes/:id", async (req, res) => {
     await connectToDB();
     const id = req.params.id;
 
-    const result = await db.collection("recipe").deleteOne({ _id: new MongoClient.ObjectId(id) });
-    res.status(200).json(result);
+    // Use your custom `id` field instead of `_id`
+    const result = await db.collection("recipe").deleteOne({ id: parseInt(id, 10) });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: "Recipe not found" });
+    }
+
+    res.status(200).json({ message: "Recipe deleted successfully" });
   } catch (error) {
     console.error("Error deleting recipe:", error);
     res.status(500).json({ error: "Failed to delete recipe" });
   }
 });
+
 
 // Start the server
 app.listen(port, () => {
