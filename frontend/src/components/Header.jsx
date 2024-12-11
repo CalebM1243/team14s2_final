@@ -8,7 +8,7 @@ const Header = ({ setActivePage }) => {
         <div className="container">
           <div className="row">
             <div className="col-sm-8 col-md-7 py-4">
-              <h4>About</h4>
+              <h4 className="text-white">About</h4>
               <p className="text-white" style={{ color: "white" }}>
                 Welcome to our Recipe Collection! Created by Ryan Heatley and Caleb Moe,
                 this website is a showcase of our passion for both technology and cooking.
@@ -16,7 +16,7 @@ const Header = ({ setActivePage }) => {
               </p>
             </div>
             <div className="col-sm-4 offset-md-1 py-4">
-              <h4>Pages</h4>
+              <h4 className="text-white">Pages</h4>
               <ul className="list-unstyled">
                 <li>
                   <Link to="/home" className="btn btn-link text-white">

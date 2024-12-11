@@ -1,15 +1,35 @@
 [
-    {
-      "username": "user1",
-      "password": "password123"
-    },
-    {
-      "username": "user2",
-      "password": "securepass456"
-    },
-    {
-      "username": "admin",
-      "password": "adminpassword"
-    }
+  {
+    "userID": "1",
+    "username": "user1",
+    "password": "password123",
+    "recipes": [],
+    "averageRating": 1.5,
+    "ratings": []
+  },
+  {
+    "userID": "2",
+    "username": "user2",
+    "password": "securepass456",
+    "recipes": [],
+    "averageRating": 3.5,
+    "ratings": [
+    { "recipeID": 1, "rating": 5 },
+    { "recipeID": 2, "rating": 5 },
+    { "recipeID": 3, "rating": 5 },
+    { "recipeID": 4, "rating": 5 },
+    { "recipeID": 5, "rating": 5 },
+    { "recipeID": 6, "rating": 5 },
+    { "recipeID": 7, "rating": 5 },
+    { "recipeID": 8, "rating": 5 }
   ]
-  
+  },
+  {
+    "userID": "3",
+    "username": "admin",
+    "password": "adminpassword",
+    "recipes": [],
+    "averageRating": 4.5,
+    "ratings": []
+  }
+]
