@@ -110,23 +110,23 @@ app.get("/listRecipes", async (req, res) => {
   }
 });
 
-// Get a recipe by ID
-app.get("/api/recipes/:id", async (req, res) => {
-  try {
-    await connectToDB();
-    const id = req.params.id;
-    const recipe = await db.collection("recipe").findOne({ _id: new MongoClient.ObjectId(id) });
+// // Get a recipe by ID
+// app.get("/api/recipes/:id", async (req, res) => {
+//   try {
+//     await connectToDB();
+//     const id = req.params.id;
+//     const recipe = await db.collection("recipe").findOne({ _id: new MongoClient.ObjectId(id) });
 
-    if (!recipe) {
-      return res.status(404).json({ error: "Recipe not found" });
-    }
+//     if (!recipe) {
+//       return res.status(404).json({ error: "Recipe not found" });
+//     }
 
-    res.status(200).json(recipe);
-  } catch (error) {
-    console.error("Error fetching recipe by ID:", error);
-    res.status(500).json({ error: "Failed to fetch recipe" });
-  }
-});
+//     res.status(200).json(recipe);
+//   } catch (error) {
+//     console.error("Error fetching recipe by ID:", error);
+//     res.status(500).json({ error: "Failed to fetch recipe" });
+//   }
+// });
 
 // Add recipe to a user's collection
 app.post("/api/recipes", async (req, res) => {
