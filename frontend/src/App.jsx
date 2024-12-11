@@ -5,7 +5,7 @@ import {
   Routes,
   Route,
   useLocation,
-} from "react-router-dom"; // Import useLocation to check the current route
+} from "react-router-dom"; 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import RecipeList from "./components/RecipeList";
@@ -18,7 +18,7 @@ import ProfilePage from "./components/ProfilePage";
 function App() {
   const [activePage, setActivePage] = useState("home");
   const [recipes, setRecipes] = useState([]);
-  const location = useLocation(); // Get the current route location
+  const location = useLocation(); 
 
   // Conditionally render Header only if not on the login or register pages
   const shouldDisplayHeader =
@@ -27,7 +27,6 @@ function App() {
   return (
     <div>
       {shouldDisplayHeader && <Header setActivePage={setActivePage} />}{" "}
-      {/* Conditionally render Header */}
       <main>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -49,7 +48,6 @@ export default function AppWrapper() {
   return (
     <Router>
       {" "}
-      {/* Ensure the Router wraps the entire App */}
       <App />
     </Router>
   );

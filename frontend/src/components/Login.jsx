@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../UserContext"; // Adjust the path to go one level up
+import { useUser } from "../UserContext"; 
 
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // State to hold error messages
+  const [error, setError] = useState(""); 
   const navigate = useNavigate();
 
-  // Get the updateUsername function from context
   const { updateUsername } = useUser();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Reset error state
+   
     setError("");
 
     // Make a POST request to login
@@ -34,19 +33,14 @@ function Login() {
 
       const data = await response.json();
 
-      // Log the response from the backend for debugging
-    console.log("Login response:", data);
 
       if (response.ok) {
-        // Update global username after successful login
         updateUsername(username);
         navigate("/home");
       } else {
-        // If login failed, set the error message
         setError(data.error || "Login failed");
       }
     } catch (error) {
-      // Handle any network or server errors
       console.error("Error logging in:", error);
       setError("An error occurred while logging in.");
     }
@@ -83,7 +77,7 @@ function Login() {
               required
             />
           </div>
-          {error && <div className="alert alert-danger">{error}</div>} {/* Show error if there's any */}
+          {error && <div className="alert alert-danger">{error}</div>} 
           <button type="submit" className="btn btn-primary w-100">Login</button>
         </form>
         <p className="text-center mt-3">

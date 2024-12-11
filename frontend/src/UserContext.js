@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
 
-// Create a context to store user data globally
 const UserContext = createContext();
 
 export const useUser = () => useContext(UserContext);

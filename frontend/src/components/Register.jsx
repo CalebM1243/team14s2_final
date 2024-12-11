@@ -1,23 +1,20 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../UserContext"; // Adjust the path if needed
+import { useUser } from "../UserContext"; 
 
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // State to hold error messages
+  const [error, setError] = useState(""); 
   const navigate = useNavigate();
 
-  // Get the updateUsername function from context (if you want to set the username globally)
   const { updateUsername } = useUser();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // Reset error state
     setError("");
 
-    // Make a POST request to register the user
     try {
       const registerRequest = {
         username,
@@ -34,19 +31,13 @@ function Register() {
 
       const data = await response.json();
 
-      // Log the response from the backend for debugging
-      console.log("Register response:", data);
-
       if (response.ok) {
-        // If registration was successful, update global username
         updateUsername(username);
         navigate("/home");
       } else {
-        // If registration failed, set the error message
         setError(data.error || "Registration failed");
       }
     } catch (error) {
-      // Handle any network or server errors
       console.error("Error registering user:", error);
       setError("An error occurred while registering.");
     }
@@ -83,7 +74,7 @@ function Register() {
               required
             />
           </div>
-          {error && <div className="alert alert-danger">{error}</div>} {/* Show error if there's any */}
+          {error && <div className="alert alert-danger">{error}</div>} 
           <button type="submit" className="btn btn-success w-100">Register</button>
         </form>
         <p className="text-center mt-3">
