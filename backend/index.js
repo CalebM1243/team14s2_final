@@ -65,9 +65,6 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-const { v4: uuidv4 } = require("uuid"); // For generating unique userIDs
-
-// User registration (with userID and recipes)
 app.post("/api/users", async (req, res) => {
   try {
     await connectToDB();
@@ -83,10 +80,10 @@ app.post("/api/users", async (req, res) => {
     }
 
     const newUser = {
-      userID: uuidv4(),
       username,
       password,
-      recipes: []
+      recipes: [], // Initialize an empty recipes array
+      ratings: []
     };
 
     const result = await db.collection("user").insertOne(newUser);
@@ -132,7 +129,7 @@ app.get("/api/recipes/:id", async (req, res) => {
 });
 
 // Add recipe to a user's collection
-app.post("/api/users/:userID/recipes", async (req, res) => {
+app.post("/api/recipes", async (req, res) => {
   try {
     await connectToDB();
     const userID = req.params.userID;
