@@ -40,7 +40,7 @@ const Header = ({ setActivePage }) => {
       </div>
       <nav className="navbar navbar-dark bg-dark shadow-sm">
         <div className="container">
-          <a className="navbar-brand d-flex align-items-center" href="#">
+          <a className="navbar-brand d-flex align-items-center" href="/home">
             <strong>Recipe Collection</strong>
           </a>
           <button

@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "creator": "user1",
     "image": "https://images.unsplash.com/photo-1633337474564-1d9478ca4e2e?q=80&w=2971&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Spaghetti Carbonara",
     "description": "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.",
@@ -25,6 +26,7 @@
   },
   {
     "id": 2,
+    "creator": "user1",
     "image": "https://images.unsplash.com/photo-1582034986517-30d163aa1da9?q=80&w=2980&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Chicken Caesar Salad",
     "description": "A fresh salad with crispy romaine lettuce, grilled chicken, croutons, and Caesar dressing.",
@@ -48,6 +50,7 @@
   },
   {
     "id": 3,
+    "creator": "user1",
     "image": "https://images.unsplash.com/photo-1640983743761-4f0e0204bc58?q=80&w=2971&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Beef Tacos",
     "description": "Delicious beef tacos with seasoned ground beef, fresh toppings, and soft tortillas.",
@@ -71,6 +74,7 @@
   },
   {
     "id": 4,
+    "creator": "user1",
     "image": "https://images.unsplash.com/photo-1543826173-70651703c5a4?q=80&w=2979&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Vegetable Stir-Fry",
     "description": "A quick and healthy stir-fry made with fresh vegetables and soy sauce.",
@@ -94,6 +98,7 @@
   },
   {
     "id": 5,
+    "creator": "user1",
     "image": "https://images.unsplash.com/photo-1573821663912-6df460f9c684?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Margherita Pizza",
     "description": "A simple and classic pizza with tomato sauce, mozzarella, and fresh basil.",
@@ -117,6 +122,7 @@
   },
   {
     "id": 6,
+    "creator": "user1",
     "image": "https://images.unsplash.com/photo-1619592982904-ef0a0da5b7e6?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Blueberry Pancakes",
     "description": "Fluffy pancakes loaded with fresh blueberries, perfect for breakfast.",
@@ -140,6 +146,7 @@
   },
   {
     "id": 7,
+    "creator": "user1",
     "image": "https://images.unsplash.com/photo-1595117796900-e3bb784ea0db?q=80&w=2974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Garlic Butter Shrimp",
     "description": "Succulent shrimp cooked in a rich garlic butter sauce.",
@@ -162,6 +169,7 @@
   },
   {
     "id": 8,
+    "creator": "user1",
     "image": "https://images.unsplash.com/photo-1584847801423-852691e41bc7?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "title": "Chocolate Chip Cookies",
     "description": "Classic chocolate chip cookies with a soft and chewy texture.",
