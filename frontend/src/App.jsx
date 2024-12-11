@@ -13,7 +13,7 @@ import Authors from "./components/Authors";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import RecipePage from "./components/RecipePage";
-
+import CreateRecipe from "./components/CreateRecipe";
 function App() {
   const [activePage, setActivePage] = useState("home");
   const [recipes, setRecipes] = useState([]);
@@ -35,6 +35,7 @@ function App() {
           <Route path="/authors" element={<Authors />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/createRecipe" element={<CreateRecipe  recipes={recipes} setRecipes={setRecipes}/>}/>
         </Routes>
       </main>
       <Footer />
