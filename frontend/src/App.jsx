@@ -21,7 +21,7 @@ function App() {
 
   // Conditionally render Header only if not on the login or register pages
   const shouldDisplayHeader =
-    location.pathname !== "/register" && location.pathname !== "/login";
+    location.pathname !== "/register" && location.pathname !== "/login" && location.pathname !== "/";
 
   return (
     <div>
