@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { MongoClient } = require("mongodb");
-const bcrypt = require("bcryptjs"); // Use bcrypt to hash passwords
 
 const app = express();
 app.use(cors());

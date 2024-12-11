@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Row, Col, Spinner } from 'react-bootstrap';
-import { Link, useNavigate } from "react-router-dom";
+import { Card, Button, Row, Col, Spinner, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-
-const ListRecipes = ({recipes,setRecipes, setActivePage}) => {
+const ListRecipes = ({ recipes, setRecipes }) => {
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect((recipes) => {
     fetch("http://localhost:8081/listRecipes")
       .then((response) => {
         if (!response.ok) {
@@ -16,20 +16,26 @@ const ListRecipes = ({recipes,setRecipes, setActivePage}) => {
         return response.json();
       })
       .then((data) => {
-        setRecipes(data); // Assuming you're storing the recipes in state
+        setRecipes(data);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching recipes:", error);
       });
   }, []);
-  
-  const handleViewRecipe = (recipe) => {
-    // Navigate to the recipe page by updating window.location
 
-    setRecipes(recipe);
-    navigate("/recipe");
+  const handleViewRecipe = (recipe) => {
+    navigate("/recipe", { state: { recipe } }); 
   };
+  
+
+  const handleCreateRecipe = () => {
+    navigate("/createRecipe");
+  };
+
+  const filteredRecipes = recipes.filter(recipe =>
+    recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (loading) {
     return (
@@ -39,13 +45,23 @@ const ListRecipes = ({recipes,setRecipes, setActivePage}) => {
     );
   }
 
-return (
-  <div className="container mt-5">
-    <h1 className="text-center mb-4">Recipes</h1>
-    <Row>
-      {Array.isArray(recipes) && recipes.length > 0 ? (
-        recipes.map((recipe) => {
-          return (
+  return (
+    <div className="container mt-5">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="text-center">Recipes</h1>
+        <Button variant="success" onClick={handleCreateRecipe}>+ Add Recipe</Button>
+      </div>
+      <Form.Group className="mb-4">
+        <Form.Control
+          type="text"
+          placeholder="Search for a recipe..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </Form.Group>
+      <Row>
+        {filteredRecipes.length > 0 ? (
+          filteredRecipes.map((recipe) => (
             <Col md={6} lg={4} key={recipe.id} className="mb-4">
               <Card>
                 <Card.Img
@@ -59,23 +75,22 @@ return (
                   <Card.Text>{recipe.description}</Card.Text>
                   <Button
                     variant="primary"
-                    onClick={() => handleViewRecipe(recipe)}  // Programmatically navigate
+                    onClick={() => handleViewRecipe(recipe)}
                   >
                     View Recipe
                   </Button>
                 </Card.Body>
               </Card>
             </Col>
-          );
-        })
-      ) : (
-        <div className="text-center">
-          <p>No recipes found.</p>
-        </div>
-      )}
-    </Row>
-  </div>
-);
+          ))
+        ) : (
+          <div className="text-center">
+            <p>No recipes found.</p>
+          </div>
+        )}
+      </Row>
+    </div>
+  );
+};
 
-}
 export default ListRecipes;

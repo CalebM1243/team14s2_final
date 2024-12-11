@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 import '../css/RecipePage.css'; // For custom styles
+import { useLocation} from "react-router-dom";
+
 const goBack = () => {
   if (window.history.length > 1) {
     window.history.back();
@@ -10,7 +12,9 @@ const goBack = () => {
   }
 };
 
-const RecipePage = ({ recipes, setActivePage }) => {
+const RecipePage = () => {
+  const location = useLocation();
+  const recipes = location.state.recipe;
   if (!recipes) {
     return <div>Recipe not found</div>;  // In case no recipe is passed or error occurs
   }
