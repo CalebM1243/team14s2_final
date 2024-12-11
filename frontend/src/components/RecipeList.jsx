@@ -7,23 +7,23 @@ const ListRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch("http://localhost:8081/listRecipes")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Fetched recipes:", data); // Check if data is received correctly
-        setRecipes(data); // Assuming you're storing the recipes in state
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching recipes:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:8081/listRecipes")
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       console.log("Fetched recipes:", data); // Check if data is received correctly
+  //       setRecipes(data); // Assuming you're storing the recipes in state
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching recipes:", error);
+  //     });
+  // }, []);
   
 
   if (loading) {

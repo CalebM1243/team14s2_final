@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { MongoClient } = require("mongodb");
+const bcrypt = require("bcryptjs"); // Use bcrypt to hash passwords
 
 const app = express();
 app.use(cors());
@@ -30,6 +31,19 @@ app.get("/", (req, res) => {
 
 // CRUD Methods for Users
 
+// List users (Note: Usually, you wouldn't expose all users in production)
+app.get("/listUsers", async (req, res) => {
+  try {
+    await connectToDB(); // Ensure MongoDB connection
+    const users = await db.collection("user").find({}).toArray(); // Fetch from the 'user' collection
+    console.log("Users fetched:", users); // Log the results
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error in GET /listUsers:", error);
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
 // Get a user by ID
 app.get("/api/users/:id", async (req, res) => {
   try {
@@ -37,7 +51,7 @@ app.get("/api/users/:id", async (req, res) => {
     const id = req.params.id;
 
     // Fetch the user by ID
-    const user = await db.collection("users").findOne({ _id: new MongoClient.ObjectId(id) });
+    const user = await db.collection("user").findOne({ _id: new MongoClient.ObjectId(id) }); // Corrected to 'user' collection
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -64,7 +78,7 @@ app.post("/api/users", async (req, res) => {
     const hashedPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashedPassword;
 
-    const result = await db.collection("users").insertOne(newUser); // Use 'users' collection
+    const result = await db.collection("user").insertOne(newUser); // Corrected to 'user' collection
     console.log("User added:", result); // Log the result
     res.status(201).json(result);
   } catch (error) {

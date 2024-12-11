@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";  // Import Link from react-router-dom
 
 const Header = ({ setActivePage }) => {
   return (
@@ -8,9 +9,9 @@ const Header = ({ setActivePage }) => {
           <div className="row">
             <div className="col-sm-8 col-md-7 py-4">
               <h4>About</h4>
-              <p className="text-white" style={{color:"white"}}>
-                Welcome to our Recipe Collection! Created by Ryan Heatley and Caleb Moe, 
-                this website is a showcase of our passion for both technology and cooking. 
+              <p className="text-white" style={{ color: "white" }}>
+                Welcome to our Recipe Collection! Created by Ryan Heatley and Caleb Moe,
+                this website is a showcase of our passion for both technology and cooking.
                 Explore our favorite dishes and dive into a culinary experience brought to life through code!
               </p>
             </div>
@@ -18,28 +19,19 @@ const Header = ({ setActivePage }) => {
               <h4>Pages</h4>
               <ul className="list-unstyled">
                 <li>
-                  <button
-                    className="btn btn-link text-white"
-                    onClick={() => setActivePage("home")}
-                  >
+                  <Link to="/home" className="btn btn-link text-white">
                     Home
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button
-                    className="btn btn-link text-white"
-                    onClick={() => setActivePage("authors")}
-                  >
+                  <Link to="/authors" className="btn btn-link text-white">
                     Authors
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button
-                    className="btn btn-link text-white"
-                    onClick={() => setActivePage("profile")}
-                  >
+                  <Link to="/profile" className="btn btn-link text-white">
                     Your Profile
-                  </button>
+                  </Link>
                 </li>
               </ul>
             </div>
