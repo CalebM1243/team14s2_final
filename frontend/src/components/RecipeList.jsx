@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Row, Col, Spinner } from 'react-bootstrap';
+import { Link, useNavigate } from "react-router-dom";
+
 
 const ListRecipes = ({recipes,setRecipes, setActivePage}) => {
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:8081/listRecipes")
@@ -25,7 +28,7 @@ const ListRecipes = ({recipes,setRecipes, setActivePage}) => {
     // Navigate to the recipe page by updating window.location
 
     setRecipes(recipe);
-    setActivePage("recipe");
+    navigate("/recipe");
   };
 
   if (loading) {
