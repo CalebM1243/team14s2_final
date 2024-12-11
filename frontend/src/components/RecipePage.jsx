@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useUser } from '../UserContext';
 import '../css/RecipePage.css';
 
 const goBack = () => {
@@ -12,6 +13,7 @@ const goBack = () => {
 };
 
 const RecipePage = () => {
+  const { username } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
   const recipe = location.state.recipe;
@@ -76,9 +78,16 @@ const RecipePage = () => {
   return (
     <div className="container mt-5">
       {/* Title Section */}
-      <Row className="mb-5">
+      <Row className="mb-3">
         <Col>
           <h1 className="text-center text-primary">{recipe.title}</h1>
+        </Col>
+      </Row>
+
+      {/* Recipe Creator */}
+      <Row className="mb-4">
+        <Col>
+          <p className="text-center text-muted">Created by: {recipe.creator}</p>
         </Col>
       </Row>
 
@@ -138,22 +147,26 @@ const RecipePage = () => {
           Go Back
         </Button>
 
-        <Button
-          variant="danger"
-          size="lg"
-          className="me-3"
-          onClick={handleDelete}
-        >
-          Delete
-        </Button>
+        {username === recipe.creator && (
+          <>
+            <Button
+              variant="danger"
+              size="lg"
+              className="me-3"
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
 
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={() => setShowEditModal(true)}
-        >
-          Edit
-        </Button>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => setShowEditModal(true)}
+            >
+              Edit
+            </Button>
+          </>
+        )}
       </div>
 
       {/* Edit Modal */}
