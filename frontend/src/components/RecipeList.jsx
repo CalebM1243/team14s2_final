@@ -1,10 +1,7 @@
-// src/components/ListRecipes.js
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Row, Col, Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
-const ListRecipes = () => {
-  const [recipes, setRecipes] = useState([]);
+const ListRecipes = ({recipes,setRecipes, setActivePage}) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,7 +13,6 @@ const ListRecipes = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Fetched recipes:", data); // Check if data is received correctly
         setRecipes(data); // Assuming you're storing the recipes in state
         setLoading(false);
       })
@@ -25,6 +21,12 @@ const ListRecipes = () => {
       });
   }, []);
   
+  const handleViewRecipe = (recipe) => {
+    // Navigate to the recipe page by updating window.location
+
+    setRecipes(recipe);
+    setActivePage("recipe");
+  };
 
   if (loading) {
     return (
@@ -34,38 +36,43 @@ const ListRecipes = () => {
     );
   }
 
-  return (
-    <div className="container mt-5">
-      <h1 className="text-center mb-4">Recipes</h1>
-      <Row>
-        {recipes.length > 0 ? (
-          recipes.map((recipe) => (
+return (
+  <div className="container mt-5">
+    <h1 className="text-center mb-4">Recipes</h1>
+    <Row>
+      {Array.isArray(recipes) && recipes.length > 0 ? (
+        recipes.map((recipe) => {
+          return (
             <Col md={6} lg={4} key={recipe.id} className="mb-4">
               <Card>
-                <Card.Img variant="top" src={recipe.image} alt={recipe.title} style={{ height: '200px', objectFit: 'cover' }} />
+                <Card.Img
+                  variant="top"
+                  src={recipe.image}
+                  alt={recipe.title}
+                  style={{ height: '200px', objectFit: 'cover' }}
+                />
                 <Card.Body>
                   <Card.Title>{recipe.title}</Card.Title>
                   <Card.Text>{recipe.description}</Card.Text>
-                  <Link 
-                    to={{
-                      pathname: `/recipe/${recipe.id}`,
-                      state: { recipe }  // Pass recipe data here
-                    }}
+                  <Button
+                    variant="primary"
+                    onClick={() => handleViewRecipe(recipe)}  // Programmatically navigate
                   >
-                    <Button variant="primary">View Recipe</Button>
-                  </Link>
+                    View Recipe
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>
-          ))
-        ) : (
-          <div className="text-center">
-            <p>No recipes found.</p>
-          </div>
-        )}
-      </Row>
-    </div>
-  );
-};
+          );
+        })
+      ) : (
+        <div className="text-center">
+          <p>No recipes found.</p>
+        </div>
+      )}
+    </Row>
+  </div>
+);
 
+}
 export default ListRecipes;

@@ -1,0 +1,79 @@
+/* RecipePage.css */
+
+/* Add a subtle shadow and border radius to the recipe image */
+.recipe-image {
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    max-height: 400px;
+  }
+  
+  /* Style the description box */
+  .description-box {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style each section box for ingredients and instructions */
+  .section-box {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styling for the ingredients list */
+  .ingredient-item {
+    padding-left: 15px;
+    position: relative;
+    font-size: 1.1rem;
+  }
+  
+  .ingredient-item::before {
+    position: absolute;
+    left: 0;
+    color: green;
+    font-size: 1.3rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Styling for the instructions list */
+  .instruction-item {
+    font-size: 1.1rem;
+    padding-left: 15px;
+    position: relative;
+  }
+  
+  .instruction-item::before {
+    position: absolute;
+    left: 0;
+    color: #007bff;
+    font-size: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Button Styling */
+  button {
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 50px;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  h1, h4 {
+    color: #333;
+  }
+  
+  h3 {
+    color: #495057;
+  }
+  
