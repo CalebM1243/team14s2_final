@@ -14,13 +14,13 @@ body {
   h1 {
     font-size: 2.5rem;
     color: #007bff;
-    margin-bottom: 15px; /* Adjust space between the username and the rating */
+    margin-bottom: 15px; 
   }
   
   h2 {
-    font-size: 1.8rem; /* Adjust the font size for the rating if needed */
+    font-size: 1.8rem; 
     color: #333;
-    margin-top: 10px; /* Add margin-top to create space from the username */
+    margin-top: 10px; 
   }
   
   p {
