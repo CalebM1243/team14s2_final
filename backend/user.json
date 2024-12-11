@@ -1,6 +1,5 @@
 [
   {
-    "userID": "1",
     "username": "user1",
     "password": "password123",
     "recipes": [
@@ -16,7 +15,6 @@
     "ratings": []
   },
   {
-    "userID": "2",
     "username": "user2",
     "password": "securepass456",
     "recipes": [],
@@ -32,7 +30,6 @@
   ]
   },
   {
-    "userID": "3",
     "username": "admin",
     "password": "adminpassword",
     "recipes": [],

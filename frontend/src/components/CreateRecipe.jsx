@@ -15,11 +15,9 @@ const CreateRecipe = ({ recipes, setRecipes }) => {
 
 
     const handleSubmit = async (e) => {
-        const newId = await recipes.reduce((maxId, recipe) => Math.max(maxId, recipe.id), 0) + 1;
         e.preventDefault();
         try {
             const newRecipe = {
-                id: newId,
                 creator: username,
                 title,
                 description,
